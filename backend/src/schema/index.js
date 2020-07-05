@@ -1,6 +1,7 @@
 import {gql} from 'apollo-server';
 
 import infoSchema from './infoSchema';
+import navigationSchema from "./navigationSchema";
 
 const linkSchema = gql`    
     type Query {
@@ -13,4 +14,4 @@ const linkSchema = gql`
         _: Boolean
     }
 `;
-module.exports = [linkSchema, infoSchema];
+module.exports = [linkSchema, infoSchema, navigationSchema];

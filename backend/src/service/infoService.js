@@ -14,7 +14,7 @@ const setGeneralInfo = function (input) {
   return GeneralInfo.findOneAndUpdate(
     {"id": "rotfuks.de"},
     { "$set":{title: input.title}},
-    {"new": true}); //returns new document
+    {"new": true});
 };
 
 export default {

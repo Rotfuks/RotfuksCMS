@@ -1,4 +1,5 @@
 import infoResolver from './infoResolver';
+import navigationResolver from "./navigationResolver";
 
 const nodeResolver = {
   Node: {
@@ -7,4 +8,4 @@ const nodeResolver = {
         return 'GeneralInfo';
       }}}};
 
-export default [nodeResolver, infoResolver];
+export default [nodeResolver, infoResolver, navigationResolver];
