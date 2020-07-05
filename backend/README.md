@@ -10,6 +10,20 @@ At last you have to download the dependencies with
 ```
 npm install
 ```
+#### Setup Dataset
+When starting the RotfuksCMS for a new RotfuksPagesInstance you first need to define the PAGES_ID within the .env-file.
+Additionally you have to set up the Datasets for it. 
+
+These fields are needed: 
+```
+id: <PAGES_ID>
+pagesId: <PAGES_ID>
+```
+in a newly created object of the following collections:
+```
+navbars
+generalInfos
+```
 
 #### Start the application
 This Application runs with nodemon, just start 
