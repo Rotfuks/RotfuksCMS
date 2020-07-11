@@ -11,7 +11,7 @@ export default gql`
         deleteTextComponent(id: ID!): Boolean
     }
     type TextComponent implements Node & Component {
-        pagesId: ID!
+        rPagesId: ID!
         id: ID!
         name: String!
         title: String

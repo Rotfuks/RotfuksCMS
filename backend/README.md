@@ -17,7 +17,7 @@ Additionally you have to set up the Datasets for it.
 These fields are needed: 
 ```
 id: <PAGES_ID>
-pagesId: <PAGES_ID>
+rPagesId: <ROTFUKS_PAGES_ID>
 ```
 in a newly created object of the following collections:
 ```

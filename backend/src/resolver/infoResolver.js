@@ -2,7 +2,7 @@ import infoService from '../service/infoService';
 
 export default {
   Query: {
-    generalInfo: (parent, {args}) => {return infoService.getGeneralInfo()}
+    generalInfo: (parent) => {return infoService.getGeneralInfo()}
   },
   Mutation: {
     updateGeneralInfo: {

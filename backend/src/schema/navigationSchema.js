@@ -7,7 +7,7 @@ export default gql`
         navLink(id: ID!): NavLink 
     }
     type Navbar implements Node {
-        pagesId: ID!
+        rPagesId: ID!
         id: ID!
         logo: String
         text: String
@@ -26,7 +26,7 @@ export default gql`
     }
     
     type NavLink implements Node{
-        pagesId: ID!
+        rPagesId: ID!
         id: ID!
         label: String!
         url: String!

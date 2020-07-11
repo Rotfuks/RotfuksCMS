@@ -3,7 +3,7 @@ import {v4 as uuidv4} from "uuid";
 
 const textComponentSchema = mongoose.Schema({
   id: { type: String, index: { unique: true } },
-  pagesId: { type: String, index: true },
+  rPagesId: { type: String, index: true },
   name: String,
   title: String,
   markuptext: String,
@@ -12,7 +12,7 @@ const textComponentSchema = mongoose.Schema({
 const TextComponent = mongoose.model('TextComponent', textComponentSchema);
 
 const getTextComponents = function () {
-  return TextComponent.find({pagesId: process.env.PAGES_ID});
+  return TextComponent.find({rPagesId: process.env.PAGES_ID});
 };
 
 const getTextComponent = function (id) {
@@ -22,7 +22,7 @@ const getTextComponent = function (id) {
 const createTextComponent = function (textComponent) {
   let newTextComponent = new TextComponent(textComponent);
   newTextComponent.id = uuidv4();
-  newTextComponent.pagesId = process.env.PAGES_ID;
+  newTextComponent.rPagesId = process.env.PAGES_ID;
   return newTextComponent.save();
 };
 

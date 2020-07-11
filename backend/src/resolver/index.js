@@ -1,5 +1,6 @@
 import infoResolver from './infoResolver';
 import navigationResolver from "./navigationResolver";
+import sectionResolver from "./sectionResolver";
 import textComponentResolver from "./components/textComponentResolver";
 import imageComponentResolver from "./components/imageComponentResolver";
 
@@ -14,6 +15,8 @@ const nodeResolver = {
         return 'TextComponent';
       } else if (node.rounded) {
         return 'ImageComponent';
+      } else if (node.components) {
+        return 'Section';
       } else {
         return 'GeneralInfo';
       }
@@ -22,9 +25,11 @@ const nodeResolver = {
     __resolveType(component) {
       if (component.markuptext) {
         return 'TextComponent';
-      }
-    }},
+      } else if (node.rounded) {
+        return 'ImageComponent';
+      }}},
 };
 
 export default [nodeResolver, infoResolver, navigationResolver,
+  sectionResolver,
   textComponentResolver, imageComponentResolver];

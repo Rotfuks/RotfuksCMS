@@ -11,7 +11,7 @@ export default gql`
         deleteImageComponent(id: ID!): Boolean
     }
     type ImageComponent implements Node & Component {
-        pagesId: ID!
+        rPagesId: ID!
         id: ID!
         name: String!
         title: String,

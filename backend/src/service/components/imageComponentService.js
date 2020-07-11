@@ -3,7 +3,7 @@ import {v4 as uuidv4} from "uuid";
 
 const imageComponentSchema = mongoose.Schema({
   id: { type: String, index: { unique: true } },
-  pagesId: { type: String, index: true },
+  rPagesId: { type: String, index: true },
   name: String,
   title: String,
   alttext: String,
@@ -14,7 +14,7 @@ const imageComponentSchema = mongoose.Schema({
 const ImageComponent = mongoose.model('ImageComponent', imageComponentSchema);
 
 const getImageComponents = function () {
-  return ImageComponent.find({pagesId: process.env.PAGES_ID});
+  return ImageComponent.find({rPagesId: process.env.PAGES_ID});
 };
 
 const getImageComponent = function (id) {
@@ -24,7 +24,7 @@ const getImageComponent = function (id) {
 const createImageComponent = function (imageComponent) {
   let newImageComponent = new ImageComponent(imageComponent);
   newImageComponent.id = uuidv4();
-  newImageComponent.pagesId = process.env.PAGES_ID;
+  newImageComponent.rPagesId = process.env.PAGES_ID;
   return newImageComponent.save();
 };
 
