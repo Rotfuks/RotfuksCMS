@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const generalInfoSchema = mongoose.Schema({
   id: { type: String, index: { unique: true } },
-  pagesId: {type: String, index: true},
+  rPagesId: {type: String, index: true},
   title: String,
 });
 const GeneralInfo = mongoose.model('GeneralInfo', generalInfoSchema);

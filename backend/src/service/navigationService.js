@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const navLinkSchema = mongoose.Schema({
   id: { type: String, index: { unique: true } },
-  pagesId: {type: String, index: true},
+  rPagesId: {type: String, index: true},
   label: String,
   url: String,
   linkTarget: Boolean
@@ -11,7 +11,7 @@ const navLinkSchema = mongoose.Schema({
 
 const navbarSchema = mongoose.Schema({
   id: { type: String, index: { unique: true } },
-  pagesId: {type: String, index: true},
+  rPagesId: {type: String, index: true},
   logo: String,
   text: String,
   mainNav: [navLinkSchema],
@@ -48,7 +48,7 @@ const resolveNavList = async function (navList) {
 };
 
 const getAllNavLinks = function () {
-  return NavLink.find({pagesId: process.env.PAGES_ID});
+  return NavLink.find({rPagesId: process.env.PAGES_ID});
 };
 
 const getNavLink = function (id) {
@@ -58,7 +58,7 @@ const getNavLink = function (id) {
 const createNavLink = function (navLink) {
   let newNavLink = new NavLink(navLink);
   newNavLink.id = uuidv4();
-  newNavLink.pagesId = process.env.PAGES_ID;
+  newNavLink.rPagesId = process.env.PAGES_ID;
   return newNavLink.save();
 };
 

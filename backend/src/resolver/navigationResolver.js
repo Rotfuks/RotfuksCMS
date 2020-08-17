@@ -2,8 +2,8 @@ import navigationService from '../service/navigationService';
 
 export default {
   Query: {
-    navbar: (parent, args) => {return navigationService.getNavbar()},
-    navLinks: (parent, args) => {return navigationService.getAllNavLinks()},
+    navbar: (parent) => {return navigationService.getNavbar()},
+    navLinks: (parent) => {return navigationService.getAllNavLinks()},
     navLink: (parent, args) => {return navigationService.getNavLink(args.id)},
   },
   Mutation: {

@@ -10,9 +10,10 @@ export default gql`
         updateTextComponent(id: ID!, textComponent: TextComponentInput!): TextComponent
         deleteTextComponent(id: ID!): Boolean
     }
-    type TextComponent implements Node & Component {
-        pagesId: ID!
-        id: ID!
+    type TextComponent implements Component {
+        rPagesId: ID!
+        _id: ID!
+        type: ComponentType
         name: String!
         title: String
         markuptext: String
