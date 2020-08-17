@@ -3,7 +3,10 @@ import sectionService from "../service/sectionService";
 export default {
   Query: {
     section: (parent, args) => {return sectionService.getSection(args.id)},
-    sections: (parent, args) => {return sectionService.getSections()},
+    sections: async (parent, args) => {
+      let result = await sectionService.getSections();
+      return result;
+    },
   },
   Mutation: {
     createSection: (parent, args) => {

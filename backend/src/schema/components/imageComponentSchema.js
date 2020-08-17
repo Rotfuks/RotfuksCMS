@@ -10,20 +10,21 @@ export default gql`
         updateImageComponent(id: ID!, imageComponent: ImageComponentInput!): ImageComponent
         deleteImageComponent(id: ID!): Boolean
     }
-    type ImageComponent implements Node & Component {
+    type ImageComponent implements Component {
         rPagesId: ID!
-        id: ID!
+        _id: ID!
+        type: ComponentType
         name: String!
-        title: String,
-        alttext: String,
-        src: String,
-        rounded: Boolean,
+        title: String
+        alttext: String
+        src: String
+        rounded: Boolean
     }
     input ImageComponentInput {
         name: String!
-        title: String,
-        alttext: String,
-        src: String,
-        rounded: Boolean,
+        title: String
+        alttext: String
+        src: String
+        rounded: Boolean
     }
 `;

@@ -8,16 +8,22 @@ import imageComponentSchema from "./components/imageComponentSchema";
 
 const linkSchema = gql`    
     type Query {
-        _: Boolean
+        components: [Component]
     }
     interface Node {
         id: ID!
         rPagesId: ID!
     }
     interface Component {
-        id: ID!
+        _id: ID!
+        rPagesId: ID!
         name: String!
+        type: ComponentType
         title: String
+    }
+    enum ComponentType {
+        ImageComponent
+        TextComponent
     }
     type Mutation {
         _: Boolean

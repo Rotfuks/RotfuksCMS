@@ -7,7 +7,7 @@ export default gql`
     }
     extend type Mutation {
         createSection(section: CreateSectionInput!): Section
-        updateSection(id: ID!, section: UpdateSectionInput!): Section
+        updateSection(section: UpdateSectionInput!): Section
         deleteSection(id: ID!): Boolean
     }
     type Section implements Node {
@@ -27,8 +27,8 @@ export default gql`
         id: ID!
         name: String
         title: String
-        columns: Int!
-        components: [ID]!
+        columns: Int
+        components: [ID]
     }
   
 `;

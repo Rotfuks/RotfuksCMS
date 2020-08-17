@@ -11,6 +11,7 @@ export default gql`
         rPagesId: ID!
         id: ID!
         title: String!
+        meta: String!
     }
     input GeneralInfoInput {
         title: String!

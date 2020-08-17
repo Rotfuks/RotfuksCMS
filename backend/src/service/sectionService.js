@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 import { v4 as uuidv4 } from 'uuid';
+import { Component } from "./componentService";
 
 const sectionSchema = mongoose.Schema({
   id: { type: String, index: { unique: true } },
@@ -8,16 +10,21 @@ const sectionSchema = mongoose.Schema({
   name: String,
   title: String,
   columns: Number,
-  components: [String],
+  components: [{type: Schema.Types.ObjectId, ref: 'Component'}]
 });
 const Section = mongoose.model('Section', sectionSchema);
 
 const getSections = function() {
   return Section.find({rPagesId: process.env.PAGES_ID})
+    .populate('components');
+};
+
+const resolveComponentList = function (section) {
+  return Component.find({"id": {$in: section.components}});
 };
 
 const getSection = function (id) {
-  return Section.findOne({id: id});
+  return Section.findOne({id: id}).populate('components');
 };
 
 const createSection = function (section) {
