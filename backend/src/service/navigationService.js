@@ -1,17 +1,14 @@
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 
 const navLinkSchema = mongoose.Schema({
-  id: { type: String, index: { unique: true } },
-  pagesId: {type: String, index: true},
+  rPagesId: {type: String, index: true },
   label: String,
   url: String,
   linkTarget: Boolean
 });
 
 const navbarSchema = mongoose.Schema({
-  id: { type: String, index: { unique: true } },
-  pagesId: {type: String, index: true},
+  rPagesId: {type: String, index: { unique: true }},
   logo: String,
   text: String,
   mainNav: [navLinkSchema],
@@ -22,7 +19,7 @@ const NavLink = mongoose.model('NavLink', navLinkSchema);
 const Navbar = mongoose.model('Navbar', navbarSchema);
 
 const getNavbar = function () {
-  return Navbar.findOne({id: process.env.PAGES_ID});
+  return Navbar.findOne({rPagesId: process.env.PAGES_ID});
 };
 
 const setNavbar = async function (navbarInput) {
@@ -30,7 +27,7 @@ const setNavbar = async function (navbarInput) {
   navbarInput.sideNav = await resolveNavList(navbarInput.sideNav);
 
   return Navbar.findOneAndUpdate(
-    {"id": process.env.PAGES_ID},
+    {"rPagesId": process.env.PAGES_ID},
     { "$set": navbarInput},
     {"new": true});
 };
@@ -38,8 +35,8 @@ const setNavbar = async function (navbarInput) {
 const resolveNavList = async function (navList) {
   if (!navList) return;
   const resolveMainNav = await navList.map(async (navLink) => {
-    if (navLink.id) {
-      return await NavLink.findOne({id: navLink.id});
+    if (navLink._id) {
+      return await NavLink.findOne({_id: navLink._id});
     } else {
       return await createNavLink(navLink);
     }
@@ -48,38 +45,37 @@ const resolveNavList = async function (navList) {
 };
 
 const getAllNavLinks = function () {
-  return NavLink.find({pagesId: process.env.PAGES_ID});
+  return NavLink.find({rPagesId: process.env.PAGES_ID});
 };
 
-const getNavLink = function (id) {
-  return NavLink.findOne({id: id});
+const getNavLink = function (_id) {
+  return NavLink.findOne({_id: _id});
 };
 
 const createNavLink = function (navLink) {
   let newNavLink = new NavLink(navLink);
-  newNavLink.id = uuidv4();
-  newNavLink.pagesId = process.env.PAGES_ID;
+  newNavLink.rPagesId = process.env.PAGES_ID;
   return newNavLink.save();
 };
 
-const setNavLink = function (id, navLink) {
+const setNavLink = function (_id, navLink) {
   return NavLink.findOneAndUpdate(
-    {"id": id},
+    {"_id": _id},
     { "$set": navLink},
     {"new": true});
 };
 
-const deleteNavLink = function (id) {
-  deleteNavLinkRefs(id);
-  return NavLink.deleteOne({id: id});
+const deleteNavLink = function (_id) {
+  deleteNavLinkRefs(_id);
+  return NavLink.deleteOne({_id: _id});
 };
 
-const deleteNavLinkRefs = async function (id) {
+const deleteNavLinkRefs = async function (_id) {
   getNavbar().then((navbar) => {
     if (navbar.mainNav)
-      navbar.mainNav = navbar.mainNav.filter((nav) => nav.id !== id);
+      navbar.mainNav = navbar.mainNav.filter((nav) => nav._id !== _id);
     if (navbar.sideNav)
-      navbar.sideNav = navbar.sideNav.filter((nav) => nav.id !== id);
+      navbar.sideNav = navbar.sideNav.filter((nav) => nav._id !== _id);
     navbar.save();
   })
 };

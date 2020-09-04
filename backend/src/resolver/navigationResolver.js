@@ -2,9 +2,9 @@ import navigationService from '../service/navigationService';
 
 export default {
   Query: {
-    navbar: (parent, args) => {return navigationService.getNavbar()},
-    navLinks: (parent, args) => {return navigationService.getAllNavLinks()},
-    navLink: (parent, args) => {return navigationService.getNavLink(args.id)},
+    navbar: (parent) => {return navigationService.getNavbar()},
+    navLinks: (parent) => {return navigationService.getAllNavLinks()},
+    navLink: (parent, args) => {return navigationService.getNavLink(args._id)},
   },
   Mutation: {
     createNavLink: (parent, args) => {
@@ -13,7 +13,7 @@ export default {
     updateNavLink: {
       resolve(parentValue, args){
         return new Promise((resolve, reject) => {
-          navigationService.setNavLink(args.id, args.navLink)
+          navigationService.setNavLink(args._id, args.navLink)
             .exec((err, res) => {
               if(err) reject(err);
               else resolve(res)
@@ -22,7 +22,7 @@ export default {
       }
     },
     deleteNavLink: (parent, args) => {
-      return navigationService.deleteNavLink(args.id).then(result => result.deletedCount > 0);
+      return navigationService.deleteNavLink(args._id).then(result => result.deletedCount > 0);
     },
     updateNavbar: (parent, args) => {
       return navigationService.setNavbar(args.navbar);

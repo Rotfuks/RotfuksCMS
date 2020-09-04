@@ -1,27 +1,23 @@
-import imageComponentService from "../../service/components/imageComponentService";
+import componentService from "../../service/componentService";
+import {ComponentType} from "../../service/componentService";
 
 export default {
   Query: {
-    imageComponents: (parent, args) => {return imageComponentService.getImageComponents()},
-    imageComponent: (parent, args) => {return imageComponentService.getImageComponent(args.id)},
+    imageComponents: (parent, args) => {
+      return componentService.getComponents(ComponentType.IMAGECOMPONENT);
+    },
+    imageComponent: (parent, args) => {return componentService.getComponent(args._id)},
   },
   Mutation: {
     createImageComponent: (parent, args) => {
-      return imageComponentService.createImageComponent(args.imageComponent);
+      args.imageComponent.type = ComponentType.IMAGECOMPONENT;
+      return componentService.createComponent(args.imageComponent);
     },
-    updateImageComponent: {
-      resolve(parentValue, args){
-        return new Promise((resolve, reject) => {
-          imageComponentService.setImageComponent(args.id, args.imageComponent)
-            .exec((err, res) => {
-              if(err) reject(err);
-              else resolve(res)
-            })
-        })
-      }
+    updateImageComponent: (parent, args) => {
+      return componentService.setComponent(args.imageComponent);
     },
     deleteImageComponent: (parent, args) => {
-      return imageComponentService.deleteImageComponent(args.id).then(result => result.deletedCount > 0);
+      return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
     },
   }
 }

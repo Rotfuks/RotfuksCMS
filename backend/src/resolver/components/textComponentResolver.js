@@ -1,27 +1,23 @@
-import textComponentService from "../../service/components/textComponentService";
+import componentService from "../../service/componentService";
+import {ComponentType} from "../../service/componentService";
 
 export default {
   Query: {
-    textComponents: (parent, args) => {return textComponentService.getTextComponents()},
-    textComponent: (parent, args) => {return textComponentService.getTextComponent(args.id)},
+    textComponents: (parent, args) => {
+      return componentService.getComponents(ComponentType.TEXTCOMPONENT);
+    },
+    textComponent: (parent, args) => {return componentService.getComponent(args._id)},
   },
   Mutation: {
     createTextComponent: (parent, args) => {
-      return textComponentService.createTextComponent(args.textComponent);
+      args.textComponent.type = ComponentType.TEXTCOMPONENT;
+      return componentService.createComponent(args.textComponent);
     },
-    updateTextComponent: {
-      resolve(parentValue, args){
-        return new Promise((resolve, reject) => {
-          textComponentService.setTextComponent(args.id, args.textComponent)
-            .exec((err, res) => {
-              if(err) reject(err);
-              else resolve(res)
-            })
-        })
-      }
+    updateTextComponent: (parent, args) => {
+      return componentService.setComponent(args.component);
     },
     deleteTextComponent: (parent, args) => {
-      return textComponentService.deleteTextComponent(args.id).then(result => result.deletedCount > 0);
+      return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
     },
   }
 }
