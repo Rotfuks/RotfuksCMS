@@ -4,9 +4,9 @@ import {ComponentType} from "../../service/componentService";
 export default {
   Query: {
     textComponents: (parent, args) => {
-      return componentService.getComponents(ComponentType.TEXTCOMPONENT).lean();
+      return componentService.getComponents(ComponentType.TEXTCOMPONENT);
     },
-    textComponent: (parent, args) => {return componentService.deleteComponent(args.id)},
+    textComponent: (parent, args) => {return componentService.getComponent(args._id)},
   },
   Mutation: {
     createTextComponent: (parent, args) => {
@@ -17,7 +17,7 @@ export default {
       return componentService.setComponent(args.component);
     },
     deleteTextComponent: (parent, args) => {
-      return componentService.deleteComponent(args.id).then(result => result.deletedCount > 0);
+      return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
     },
   }
 }

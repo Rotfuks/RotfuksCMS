@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
-import {v4 as uuidv4} from "uuid";
 
 const componentSchema = mongoose.Schema({
-  id: { type: String, index: { unique: true } },
   rPagesId: { type: String, index: true },
   name: String,
   type: String,
@@ -37,25 +35,24 @@ const getAllComponents = function () {
 };
 
 const getComponent = function (id) {
-  return Component.findOne({id: id});
+  return Component.findOne({_id: id});
 };
 
 const createComponent = function (component) {
   let newComponent = new Component(component);
-  newComponent.id = uuidv4();
   newComponent.rPagesId = process.env.PAGES_ID;
   return newComponent.save();
 };
 
 const setComponent = function (component) {
   return Component.findOneAndUpdate(
-    {"id": component.id},
+    {"_id": component._id},
     { "$set": component},
     {"new": true});
 };
 
-const deleteComponent = function (id) {
-  return Component.deleteOne({id: id});
+const deleteComponent = function (_id) {
+  return Component.deleteOne({_id: id});
 };
 
 export default {

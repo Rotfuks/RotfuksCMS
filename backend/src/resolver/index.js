@@ -1,9 +1,12 @@
 import infoResolver from './infoResolver';
 import navigationResolver from "./navigationResolver";
-import sectionResolver from "./sectionResolver";
+import pageResolver from './pageResolver';
+
 import textComponentResolver from "./components/textComponentResolver";
 import imageComponentResolver from "./components/imageComponentResolver";
+
 import componentService, {ComponentType} from "../service/componentService";
+
 
 const nodeResolver = {
   Node: {
@@ -14,6 +17,8 @@ const nodeResolver = {
         return 'Navbar';
       } else if (node.toObject().components) {
         return 'Section';
+      } else if (node.toObject().sections) {
+        return 'Page';
       } else {
         return 'GeneralInfo';
       }
@@ -24,10 +29,12 @@ const nodeResolver = {
 const componentResolver = {
   Component: {
     __resolveType(component) {
-      if (component.toObject().markuptext !== undefined) {
-        return 'TextComponent';
-      } else if (component.toObject().rounded !== undefined) {
-        return 'ImageComponent';
+      console.log(component);
+      switch (component.toObject().type) {
+        case (ComponentType.TEXTCOMPONENT):
+          return 'TextComponent';
+        case (ComponentType.IMAGECOMPONENT):
+          return 'ImageComponent';
       }
       return null;
     }
@@ -40,5 +47,5 @@ const componentResolver = {
 };
 
 export default [nodeResolver, componentResolver,
-  infoResolver, navigationResolver, sectionResolver,
+  infoResolver, navigationResolver, pageResolver,
   textComponentResolver, imageComponentResolver];

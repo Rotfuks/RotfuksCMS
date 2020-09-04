@@ -4,11 +4,10 @@ export default gql`
     extend type Query {
         navbar: Navbar
         navLinks: [NavLink]
-        navLink(id: ID!): NavLink 
+        navLink(_id: ID!): NavLink 
     }
     type Navbar implements Node {
-        rPagesId: ID!
-        id: ID!
+        _id: ID!
         logo: String
         text: String
         mainNav: [NavLink]
@@ -25,15 +24,14 @@ export default gql`
         variant: String
     }
     
-    type NavLink implements Node{
-        rPagesId: ID!
-        id: ID!
+    type NavLink implements Node {
+        _id: ID!
         label: String!
         url: String!
         linkTarget: Boolean
     }
     input NavLinkInput {
-        id: ID
+        _id: ID
         label: String
         url: String
         linkTarget: Boolean
@@ -41,8 +39,8 @@ export default gql`
   
     extend type Mutation {
         createNavLink(navLink: NavLinkInput): NavLink
-        updateNavLink(id: ID, navLink: NavLinkInput): NavLink
-        deleteNavLink(id: ID): Boolean
+        updateNavLink(_id: ID, navLink: NavLinkInput): NavLink
+        deleteNavLink(_id: ID): Boolean
         
         updateNavbar(navbar: NavbarInput): Navbar
     }

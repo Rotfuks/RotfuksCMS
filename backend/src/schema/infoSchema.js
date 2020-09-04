@@ -8,8 +8,7 @@ export default gql`
         updateGeneralInfo(generalInfo: GeneralInfoInput): GeneralInfo
     }
     type GeneralInfo implements Node{
-        rPagesId: ID!
-        id: ID!
+        _id: ID!
         title: String!
         meta: String!
     }

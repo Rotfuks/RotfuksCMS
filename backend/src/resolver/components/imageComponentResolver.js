@@ -4,9 +4,9 @@ import {ComponentType} from "../../service/componentService";
 export default {
   Query: {
     imageComponents: (parent, args) => {
-      return componentService.getComponents(ComponentType.IMAGECOMPONENT).lean();
+      return componentService.getComponents(ComponentType.IMAGECOMPONENT);
     },
-    imageComponent: (parent, args) => {return componentService.getComponent(args.id)},
+    imageComponent: (parent, args) => {return componentService.getComponent(args._id)},
   },
   Mutation: {
     createImageComponent: (parent, args) => {
@@ -17,7 +17,7 @@ export default {
       return componentService.setComponent(args.imageComponent);
     },
     deleteImageComponent: (parent, args) => {
-      return componentService.deleteComponent(args.id).then(result => result.deletedCount > 0);
+      return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
     },
   }
 }
