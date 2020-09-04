@@ -2,7 +2,6 @@ import {gql} from 'apollo-server';
 
 import infoSchema from './infoSchema';
 import navigationSchema from "./navigationSchema";
-import sectionSchema from "./sectionSchema";
 import pageSchema from "./pageSchema";
 import textComponentSchema from "./components/textComponentSchema";
 import imageComponentSchema from "./components/imageComponentSchema";
@@ -29,5 +28,5 @@ const linkSchema = gql`
     }
 `;
 module.exports = [linkSchema, infoSchema, navigationSchema,
-  sectionSchema, pageSchema,
+  pageSchema,
   textComponentSchema, imageComponentSchema];

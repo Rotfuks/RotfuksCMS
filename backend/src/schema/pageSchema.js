@@ -6,8 +6,8 @@ export default gql`
         page(_id: ID!): Page
     }
     extend type Mutation {
-        createPage(page: createPageInput): Page
-        updatePage(page: updatePageInput): Page
+        createPage(page: CreatePageInput): Page
+        updatePage(page: UpdatePageInput): Page
         deletePage(_id: ID!): Boolean
     }
     type Page implements Node{
@@ -17,16 +17,29 @@ export default gql`
         url: String!
         sections: [Section]!
     }
-    input createPageInput {
+    type Section {
+        name: String!
+        title: String
+        columns: Int!
+        components: [Component]!
+    }
+    input CreatePageInput {
         name: String!
         title: String!
         url: String!
+        sections: [SectionInput]
     }
-    input updatePageInput {
+    input UpdatePageInput {
         _id: ID!
         name: String
         title: String
         url: String
-        sections: [ID]
+        sections: [SectionInput]
+    }
+    input SectionInput {
+        name: String!
+        title: String
+        columns: Int!
+        components: [ID]!
     }
 `;

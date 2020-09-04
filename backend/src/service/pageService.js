@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import sectionService from './sectionService';
 const Schema = mongoose.Schema;
 
 const pageSchema = mongoose.Schema({
@@ -7,7 +6,12 @@ const pageSchema = mongoose.Schema({
   name: String,
   title: String,
   url: String,
-  sections: [{type: Schema.Types.ObjectId, ref: 'Section'}]
+  sections: [{
+    name: String,
+    title: String,
+    columns: Number,
+    components: [{type: Schema.Types.ObjectId, ref: 'Component'}]
+  }]
 }, {
   strict: false,
   strictQuery: false,
@@ -17,19 +21,18 @@ export const Page = mongoose.model('Page', pageSchema);
 
 const getPages = async function() {
   return Page.find({rPagesId: process.env.PAGES_ID})
-    .populate({ path: 'sections', populate: { path: 'components' }});
+    .populate('sections.components');
 };
 
 const getPage = async function(_id) {
   return Page.findOne({_id: _id})
-    .populate({ path: 'sections', populate: { path: 'components' }});
+    .populate('sections.components');
 };
 
 const createPage = function (page) {
   let newPage = new Page(page);
   newPage.rPagesId = process.env.PAGES_ID;
-  newPage.sections = [];
-  return newPage.save();
+  return newPage.save().then(t => t.populate('sections.components').execPopulate());
 };
 
 const setPage = function (page) {
@@ -38,16 +41,10 @@ const setPage = function (page) {
     {_id: page._id},
     { $set: page},
     {new: true})
-    .populate({ path: 'sections', populate: { path: 'components' }});
-};
-
-const addSection = function (pageId, section) {
-  Page.findOneAndUpdate({_id: pageId},
-    {$push: {sections: section}})
+    .populate('sections.components');
 };
 
 const deletePage = function (_id) {
-  sectionService.deleteSectionByPage(_id);
   return Page.deleteOne({_id: _id});
 };
 
@@ -56,6 +53,5 @@ export default {
   getPage,
   createPage,
   setPage,
-  addSection,
   deletePage
 }
