@@ -1,10 +1,10 @@
 import {gql} from 'apollo-server';
 
 import infoSchema from './infoSchema';
-import navigationSchema from "./navigationSchema";
-import pageSchema from "./pageSchema";
-import textComponentSchema from "./components/textComponentSchema";
-import imageComponentSchema from "./components/imageComponentSchema";
+import navigationSchema from './navigationSchema';
+import pageSchema from './pageSchema';
+import textComponentSchema from './components/textComponentSchema';
+import imageComponentSchema from './components/imageComponentSchema';
 
 const linkSchema = gql`    
     type Query {

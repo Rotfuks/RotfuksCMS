@@ -6,7 +6,9 @@
   "scripts": {
     "prod": "babel-node src/index.js",
     "start": "nodemon --exec babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint src/**/*.js",
+    "lint": "eslint --fix src/**/*.js"
+
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,8 @@
     "@babel/core": "^7.10.4",
     "@babel/node": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
+    "eslint": "^7.8.1",
+    "eslint-config-google": "^0.14.0",
     "nodemon": "^2.0.4"
   }
 }

@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const pageSchema = mongoose.Schema({
-  rPagesId: { type: String, index: true },
+const pageSchema = new Schema({
+  rPagesId: {type: String, index: true},
   name: String,
   title: String,
   url: String,
@@ -10,8 +10,8 @@ const pageSchema = mongoose.Schema({
     name: String,
     title: String,
     columns: Number,
-    components: [{type: Schema.Types.ObjectId, ref: 'Component'}]
-  }]
+    components: [{type: Schema.Types.ObjectId, ref: 'Component'}],
+  }],
 }, {
   strict: false,
   strictQuery: false,
@@ -21,30 +21,31 @@ export const Page = mongoose.model('Page', pageSchema);
 
 const getPages = async function() {
   return Page.find({rPagesId: process.env.PAGES_ID})
-    .populate('sections.components');
+      .populate('sections.components');
 };
 
 const getPage = async function(_id) {
   return Page.findOne({_id: _id})
-    .populate('sections.components');
+      .populate('sections.components');
 };
 
-const createPage = function (page) {
-  let newPage = new Page(page);
+const createPage = function(page) {
+  const newPage = new Page(page);
   newPage.rPagesId = process.env.PAGES_ID;
-  return newPage.save().then(t => t.populate('sections.components').execPopulate());
+  return newPage.save().then((t) =>
+    t.populate('sections.components').execPopulate());
 };
 
-const setPage = function (page) {
+const setPage = function(page) {
   page.rPagesId = process.env.PAGES_ID;
   return Page.findOneAndUpdate(
-    {_id: page._id},
-    { $set: page},
-    {new: true})
-    .populate('sections.components');
+      {_id: page._id},
+      {$set: page},
+      {new: true})
+      .populate('sections.components');
 };
 
-const deletePage = function (_id) {
+const deletePage = function(_id) {
   return Page.deleteOne({_id: _id});
 };
 
@@ -53,5 +54,5 @@ export default {
   getPage,
   createPage,
   setPage,
-  deletePage
-}
+  deletePage,
+};

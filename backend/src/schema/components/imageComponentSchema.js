@@ -6,8 +6,10 @@ export default gql`
         imageComponent(_id: ID!): ImageComponent
     }
     extend type Mutation {
-        createImageComponent(imageComponent: ImageComponentInput!): ImageComponent
-        updateImageComponent(_id: ID!, imageComponent: ImageComponentInput!): ImageComponent
+        createImageComponent(imageComponent: ImageComponentInput!): 
+            ImageComponent
+        updateImageComponent(_id: ID!, 
+            imageComponent: ImageComponentInput!): ImageComponent
         deleteImageComponent(_id: ID!): Boolean
     }
     type ImageComponent implements Component {

@@ -1,11 +1,11 @@
 import infoResolver from './infoResolver';
-import navigationResolver from "./navigationResolver";
+import navigationResolver from './navigationResolver';
 import pageResolver from './pageResolver';
 
-import textComponentResolver from "./components/textComponentResolver";
-import imageComponentResolver from "./components/imageComponentResolver";
+import textComponentResolver from './components/textComponentResolver';
+import imageComponentResolver from './components/imageComponentResolver';
 
-import componentService, {ComponentType} from "../service/componentService";
+import componentService, {ComponentType} from '../service/componentService';
 
 
 const nodeResolver = {
@@ -22,8 +22,8 @@ const nodeResolver = {
       } else {
         return 'GeneralInfo';
       }
-    }
-  }
+    },
+  },
 };
 
 const componentResolver = {
@@ -37,13 +37,13 @@ const componentResolver = {
           return 'ImageComponent';
       }
       return null;
-    }
+    },
   },
   Query: {
     components: (parent, args) => {
       return componentService.getAllComponents();
     },
-  }
+  },
 };
 
 export default [nodeResolver, componentResolver,

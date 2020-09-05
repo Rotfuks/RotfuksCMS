@@ -7,7 +7,8 @@ export default gql`
     }
     extend type Mutation {
         createTextComponent(textComponent: TextComponentInput!): TextComponent
-        updateTextComponent(_id: ID!, textComponent: TextComponentInput!): TextComponent
+        updateTextComponent(_id: ID!, 
+            textComponent: TextComponentInput!): TextComponent
         deleteTextComponent(_id: ID!): Boolean
     }
     type TextComponent implements Component {

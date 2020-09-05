@@ -1,13 +1,15 @@
-import componentService from "../../service/componentService";
-import {ComponentType} from "../../service/componentService";
-import authService from "../../service/authService";
+import componentService from '../../service/componentService';
+import {ComponentType} from '../../service/componentService';
+import authService from '../../service/authService';
 
 export default {
   Query: {
     imageComponents: (parent, args) => {
       return componentService.getComponents(ComponentType.IMAGECOMPONENT);
     },
-    imageComponent: (parent, args) => {return componentService.getComponent(args._id)},
+    imageComponent: (parent, args) => {
+      return componentService.getComponent(args._id);
+    },
   },
   Mutation: {
     createImageComponent: (parent, args, context) => {
@@ -23,8 +25,9 @@ export default {
     },
     deleteImageComponent: (parent, args, context) => {
       if (authService.verifyToken(context.req, context.res, context.next)) {
-        return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
+        return componentService.deleteComponent(args._id)
+            .then((result) => result.deletedCount > 0);
       }
     },
-  }
-}
+  },
+};
