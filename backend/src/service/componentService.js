@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-const componentSchema = mongoose.Schema({
-  rPagesId: { type: String, index: true },
+const componentSchema = new Schema({
+  rPagesId: {type: String, index: true},
   name: String,
   type: String,
   title: String,
@@ -15,43 +16,43 @@ const componentSchema = mongoose.Schema({
 });
 
 export const ComponentType = {
-  IMAGECOMPONENT: "ImageComponent",
-  TEXTCOMPONENT: "TextComponent"
+  IMAGECOMPONENT: 'ImageComponent',
+  TEXTCOMPONENT: 'TextComponent',
 };
 
 export const Component = mongoose.model('Component', componentSchema);
 
-const getComponents = function (type) {
+const getComponents = function(type) {
   return Component.find({
     rPagesId: process.env.PAGES_ID,
-    type: type
+    type: type,
   });
 };
 
-const getAllComponents = function () {
+const getAllComponents = function() {
   return Component.find({
-    rPagesId: process.env.PAGES_ID
+    rPagesId: process.env.PAGES_ID,
   });
 };
 
-const getComponent = function (id) {
+const getComponent = function(id) {
   return Component.findOne({_id: id});
 };
 
-const createComponent = function (component) {
-  let newComponent = new Component(component);
+const createComponent = function(component) {
+  const newComponent = new Component(component);
   newComponent.rPagesId = process.env.PAGES_ID;
   return newComponent.save();
 };
 
-const setComponent = function (component) {
+const setComponent = function(component) {
   return Component.findOneAndUpdate(
-    {"_id": component._id},
-    { "$set": component},
-    {"new": true});
+      {'_id': component._id},
+      {'$set': component},
+      {'new': true});
 };
 
-const deleteComponent = function (_id) {
+const deleteComponent = function(_id) {
   return Component.deleteOne({_id: id});
 };
 
@@ -61,5 +62,5 @@ export default {
   getAllComponents,
   createComponent,
   setComponent,
-  deleteComponent
-}
+  deleteComponent,
+};
