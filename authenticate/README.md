@@ -39,3 +39,13 @@ $ npm prod
 
 #### Get an Auth token
 After setting up your users manually, they can just send an request with their name/password as json against `/api/auth/login` and they'll get a JWT Access-Token with 3h of fun.
+
+#### Docker Container
+You can also build and run the application within the Docker container with 
+```
+$ docker build -t rotfukscms/authenticate . 
+$ docker run -p <OUT_PORT>:8080 -d rotfukscms/authenticate 
+```
+Keep in mind that you have to add the environment variables. 
+You can do this by adding the `--env` parameter into the `docker run`-command, 
+or read in the env-file with the parameter `--env-file`. 
