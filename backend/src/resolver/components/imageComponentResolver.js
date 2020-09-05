@@ -1,5 +1,6 @@
 import componentService from "../../service/componentService";
 import {ComponentType} from "../../service/componentService";
+import authService from "../../service/authService";
 
 export default {
   Query: {
@@ -9,15 +10,21 @@ export default {
     imageComponent: (parent, args) => {return componentService.getComponent(args._id)},
   },
   Mutation: {
-    createImageComponent: (parent, args) => {
-      args.imageComponent.type = ComponentType.IMAGECOMPONENT;
-      return componentService.createComponent(args.imageComponent);
+    createImageComponent: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        args.imageComponent.type = ComponentType.IMAGECOMPONENT;
+        return componentService.createComponent(args.imageComponent);
+      }
     },
-    updateImageComponent: (parent, args) => {
-      return componentService.setComponent(args.imageComponent);
+    updateImageComponent: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        return componentService.setComponent(args.imageComponent);
+      }
     },
-    deleteImageComponent: (parent, args) => {
-      return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
+    deleteImageComponent: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
+      }
     },
   }
 }

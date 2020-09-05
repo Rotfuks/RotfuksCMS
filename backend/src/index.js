@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { ApolloServer, gql } from 'apollo-server';
-import db from './db';
+import './db';
 
 import typeDefs from './schema';
 import resolvers from './resolver';
@@ -8,10 +8,9 @@ import resolvers from './resolver';
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: {
-    db,
-  }
+  context:  async ({ req, res, next }) => ({ req, res, next }),
 });
+
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {

@@ -1,4 +1,5 @@
 import sectionService from "../service/sectionService";
+import authService from "../service/authService";
 
 export default {
   Query: {
@@ -9,22 +10,28 @@ export default {
     },
   },
   Mutation: {
-    createSection: (parent, args) => {
-      return sectionService.createSection(args.section);
-    },
-    updateSection: {
-      resolve(parentValue, args){
-        return new Promise((resolve, reject) => {
-          sectionService.setSection(args.section)
-            .exec((err, res) => {
-              if(err) reject(err);
-              else resolve(res)
-          })
-        })
+    createSection: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        return sectionService.createSection(args.section);
       }
     },
-    deleteSection: (parent, args) => {
-      return sectionService.deleteSection(args.id);
+    updateSection: {
+      resolve(parentValue, args, context) {
+        if (authService.verifyToken(context.req, context.res, context.next)) {
+          return new Promise((resolve, reject) => {
+            sectionService.setSection(args.section)
+              .exec((err, res) => {
+                if (err) reject(err);
+                else resolve(res)
+              })
+          })
+        }
+      }
+    },
+    deleteSection: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        return sectionService.deleteSection(args.id);
+      }
     }
   }
 }

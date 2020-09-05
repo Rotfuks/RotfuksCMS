@@ -1,5 +1,6 @@
 import componentService from "../../service/componentService";
 import {ComponentType} from "../../service/componentService";
+import authService from "../../service/authService";
 
 export default {
   Query: {
@@ -9,15 +10,21 @@ export default {
     textComponent: (parent, args) => {return componentService.getComponent(args._id)},
   },
   Mutation: {
-    createTextComponent: (parent, args) => {
-      args.textComponent.type = ComponentType.TEXTCOMPONENT;
-      return componentService.createComponent(args.textComponent);
+    createTextComponent: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        args.textComponent.type = ComponentType.TEXTCOMPONENT;
+        return componentService.createComponent(args.textComponent);
+      }
     },
-    updateTextComponent: (parent, args) => {
-      return componentService.setComponent(args.component);
+    updateTextComponent: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        return componentService.setComponent(args.component);
+      }
     },
-    deleteTextComponent: (parent, args) => {
-      return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
+    deleteTextComponent: (parent, args, context) => {
+      if (authService.verifyToken(context.req, context.res, context.next)) {
+        return componentService.deleteComponent(args._id).then(result => result.deletedCount > 0);
+      }
     },
   }
 }
