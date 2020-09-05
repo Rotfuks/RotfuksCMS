@@ -6,9 +6,8 @@
   "scripts": {
     "prod": "babel-node src/index.js",
     "start": "nodemon --exec babel-node src/index.js",
-    "test": "eslint src/**/*.js",
+    "test": "npm audit && eslint src/**/*.js",
     "lint": "eslint --fix src/**/*.js"
-
   },
   "keywords": [],
   "author": "",
