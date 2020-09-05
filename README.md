@@ -2,6 +2,7 @@
 This is the Rotfuks CMS Application. It's split up in the following packages: 
 
 - [Backend](./backend/README.md) for the GraphQL-Server
+- [Authenticate](./authenticate/README.md) for the Authentication-Server providing the Access Token
 - [Infra](./infra/README.md) for the infrastructure to help with local development
 
 ##### Known issues
