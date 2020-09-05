@@ -38,3 +38,13 @@ If you want to run the Application in **Production** set the env-variable `NODE_
 ```
 $ npm prod
 ```
+
+#### Docker Container
+You can also build and run the application within the Docker container with 
+```
+$ docker build -t rotfukscms/backend . 
+$ docker run -p <OUT_PORT>:4000 -d rotfukscms/backend 
+```
+Keep in mind that you have to add the environment variables. 
+You can do this by adding the `--env` parameter into the `docker run`-command, 
+or read in the env-file with the parameter `--env-file`. 
