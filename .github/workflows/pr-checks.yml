@@ -21,7 +21,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build backend image
-        run: docker build . --file backend/Dockerfile --tag rotfukscms/backend:PRCheck
+        run: |
+          cd backend
+          docker build -t rotfukscms/backend:PRCheck .
       
       - name: Build authentication image
-        run: docker build . --file authenticate/Dockerfile --tag rotfukscms/authenticate:PRCheck
+        run: |
+          cd authenticate 
+          docker build -t rotfukscms/authenticate:PRCheck .
