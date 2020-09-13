@@ -10,7 +10,7 @@ jobs:
 
     env:
       HASH: $(git rev-parse --short "$GITHUB_SHA")
-      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      PROJECT_ID: ${{ secrets.GCP_PROJECT }}
 
     steps:
       - name: Checkout
@@ -20,7 +20,7 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           service_account_key: ${{ secrets.CLOUD_CREDENTIALS }}
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: ${{ secrets.GCP_PROJECT }}
           export_default_credentials: true
 
       # Build docker images
