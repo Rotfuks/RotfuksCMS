@@ -5,13 +5,17 @@ on:
     branches: [ master ]
     
 jobs:
-  build-push:
-    name: 'Build and Push Docker Images'
+  build-deploy:
+    name: 'Build and Deploy'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+########################################
+#  Build and publish Apps
+########################################
 
       # Setup gcloud CLI
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -42,13 +46,9 @@ jobs:
         run: |-
           docker push gcr.io/$PROJECT_ID/rotfuks-cms/auth:$GITHUB_SHA
 
-  terraform-deploy:
-    name: 'Build Infra and Deploy via Terraform'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+########################################
+#  Deploy Infra via Terraform
+########################################
 
       # Setup the Terraform CLI
       - name: Setup Terraform
@@ -56,18 +56,11 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.CLOUD_CREDENTIALS }}
 
-
       # Initialize the terraform build
       - name: Terraform Init
         run: |-
           cd infra/terraform
           terraform init
-
-      # Check the terraform files format
-      - name: Terraform Format
-        run: |-
-          cd infra/terraform
-          terraform fmt -check
 
       # Plan the terraform apply
       - name: Terraform Plan
