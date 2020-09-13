@@ -41,10 +41,10 @@ jobs:
       # Push images to Google Container Registry
       - name: Push Backend
         run: |-
-          docker push gcr.io/$PROJECT_ID/rotfuks-cms/backend:$GITHUB_SHA
+          docker push gcr.io/${{ secrets.GCP_PROJECT }}/rotfuks-cms/backend:$GITHUB_SHA
       - name: Push Auth
         run: |-
-          docker push gcr.io/$PROJECT_ID/rotfuks-cms/auth:$GITHUB_SHA
+          docker push gcr.io/${{ secrets.GCP_PROJECT }}/rotfuks-cms/auth:$GITHUB_SHA
 
 ########################################
 #  Deploy Infra via Terraform
