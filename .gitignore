@@ -3,3 +3,8 @@
 
 # Node
 node_modules
+
+# Infrastructure
+cloud-key.json
+*tfstate*
+*/terraform/.terraform/*

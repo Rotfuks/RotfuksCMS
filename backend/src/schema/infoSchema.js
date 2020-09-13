@@ -10,7 +10,6 @@ export default gql`
     type GeneralInfo implements Node{
         _id: ID!
         title: String!
-        meta: String!
     }
     input GeneralInfoInput {
         title: String!
