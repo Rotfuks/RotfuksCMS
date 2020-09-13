@@ -12,15 +12,14 @@ npm install
 ```
 #### Setup Dataset
 When starting the RotfuksCMS for a new RotfuksPagesInstance you first need to define the PAGES_ID within the .env-file.
-Additionally you have to set up the Datasets for it. 
 
-These fields are needed: 
+These fields are needed in the env-file: 
 ```
 PAGES_ID: <PAGES_ID>
 CMS_DB_URI: <URI of the MongoDB>
 SECRET: <Secret used for Auth>
 ```
-in a newly created object of the following collections:
+Additionally you have to set up the `rPagesId`-entry for it the following collections:
 ```
 navbars
 generalInfos
