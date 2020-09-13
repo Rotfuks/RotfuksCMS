@@ -32,7 +32,7 @@ jobs:
       - name: Build Auth
         run: |-
           cd authenticate
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/rotfuks-cms/backend:$GITHUB_SHA .
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/rotfuks-cms/auth:$GITHUB_SHA .
       
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: |
