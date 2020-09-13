@@ -26,9 +26,11 @@ jobs:
       # Build docker images
       - name: Build Backend
         run: |-
+          cd backend
           docker build --build-arg -t gcr.io/$PROJECT_ID/rotfuks-cms/backend:$GITHUB_SHA .
       - name: Build Auth
         run: |-
+          cd authenticate
           docker build --build-arg -t gcr.io/$PROJECT_ID/rotfuks-cms/auth:$GITHUB_SHA .
       
       # Configure docker to use the gcloud command-line tool as a credential helper
