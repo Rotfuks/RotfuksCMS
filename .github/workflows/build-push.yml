@@ -1,0 +1,44 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [ master ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      HASH: $(git rev-parse --short "$GITHUB_SHA")
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.CLOUD_CREDENTIALS }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          export_default_credentials: true
+
+      # Build docker images
+      - name: Build Backend
+        run: |-
+          docker build --build-arg -t gcr.io/$PROJECT_ID/rotfuks-cms/backend:$GITHUB_SHA .
+      - name: Build Auth
+        run: |-
+          docker build --build-arg -t gcr.io/$PROJECT_ID/rotfuks-cms/auth:$GITHUB_SHA .
+      
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: |
+          gcloud auth configure-docker -q
+      
+      # Push images to Google Container Registry
+      - name: Push Backend
+        run: |-
+          docker push gcr.io/$PROJECT_ID/rotfuks-cms/backend:$GITHUB_SHA
+      - name: Push Auth
+        run: |-
+          docker push gcr.io/$PROJECT_ID/rotfuks-cms/auth:$GITHUB_SHA
