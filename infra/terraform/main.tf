@@ -2,30 +2,40 @@
 # Variables
 #####################################################################
 variable "project" {
+  description = "The google cloud project id."
 }
 variable "region" {
   default = "us-central1"
+  description = "The region of the cloud environment"
 }
 variable "repository" {
   default = "gcr.io"
+  description = "The repository you push images to"
 }
 variable "backend-image" {
   default = "rotfuks-cms/backend"
+  description = "The image name of the backend image"
 }
 variable "auth-image" {
   default = "rotfuks-cms/auth"
+  description = "The image name of the auth image"
 }
 variable "docker-tag" {
   default = "latest"
+  description = "The tag for the docker images"
 }
 variable "pages-id" {
   default = "rotfuks.de"
+  description = "The default id for the Rotfuks-Page"
 }
 variable "auth-secret" {
+  description = "The secret salt for the authentication token"
 }
 variable "mongodb-connection" {
+  description = "The connection string to mongodb"
 }
 variable "cloud-credentials" {
+  description = "The keyfile credentials for the gcp service account"
 }
 #####################################################################
 # Cloud Run Provider

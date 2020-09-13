@@ -1,0 +1,92 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [ master ]
+    
+jobs:
+  build-push:
+    name: 'Build and Push Docker Images'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.CLOUD_CREDENTIALS }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          export_default_credentials: true
+
+      # Build docker images
+      - name: Build Backend
+        run: |-
+          cd backend
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/rotfuks-cms/backend:${{ GITHUB_SHA}} .
+      - name: Build Auth
+        run: |-
+          cd authenticate
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/rotfuks-cms/backend:${{ GITHUB_SHA}} .
+      
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: |
+          gcloud auth configure-docker -q
+      
+      # Push images to Google Container Registry
+      - name: Push Backend
+        run: |-
+          docker push gcr.io/$PROJECT_ID/rotfuks-cms/backend:$GITHUB_SHA
+      - name: Push Auth
+        run: |-
+          docker push gcr.io/$PROJECT_ID/rotfuks-cms/auth:$GITHUB_SHA
+
+  terraform-deploy:
+    name: 'Build Infra and Deploy via Terraform'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Setup the Terraform CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.CLOUD_CREDENTIALS }}
+
+
+      # Initialize the terraform build
+      - name: Terraform Init
+        run: |-
+          cd infra/terraform
+          terraform init
+
+      # Check the terraform files format
+      - name: Terraform Format
+        run: |-
+          cd infra/terraform
+          terraform fmt -check
+
+      # Plan the terraform apply
+      - name: Terraform Plan
+        run: |-
+          cd infra/terraform
+          terraform plan \
+            -var="project=${{secrets.GCP_PROJECT}}"                   \
+            -var="docker-tag=${{GITHUB_SHA}}"                         \
+            -var="auth-secret=${{secrets.AUTH_SECRET}}"               \
+            -var="mongodb-connection=${{secrets.MONGODB_CONNECTION}}" \
+            -var="cloud-credentials=${{secrets.CLOUD_CREDENTIALS}}"
+
+      # Apply terraform scripts to gcp
+      - name: Terraform Apply
+        run: |-
+          cd infra/terraform
+          terraform apply -auto-approve \
+            -var="project=${{secrets.GCP_PROJECT}}"                   \
+            -var="docker-tag=${{GITHUB_SHA}}"                         \
+            -var="auth-secret=${{secrets.AUTH_SECRET}}"               \
+            -var="mongodb-connection=${{secrets.MONGODB_CONNECTION}}" \
+            -var="cloud-credentials=${{secrets.CLOUD_CREDENTIALS}}"
