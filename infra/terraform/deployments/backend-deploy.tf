@@ -5,7 +5,7 @@ resource "google_cloud_run_service" "backend-deploy" {
   template {
     spec {
       containers {
-        image = "${var.repository}/${var.project}/${var.docker-tag}"
+        image = "${var.repository}/${var.project}/${var.backend-image}:${var.docker-tag}"
         env {
           name = "PAGES_ID"
           value = var.pages-id

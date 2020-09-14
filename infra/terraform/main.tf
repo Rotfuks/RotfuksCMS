@@ -3,6 +3,7 @@
 #####################################################################
 variable "project" {
   description = "The google cloud project id."
+  Sensitive = true
 }
 variable "region" {
   default = "us-central1"
@@ -29,13 +30,12 @@ variable "pages-id" {
   description = "The default id for the Rotfuks-Page"
 }
 variable "auth-secret" {
+  Sensitive = true
   description = "The secret salt for the authentication token"
 }
 variable "mongodb-connection" {
+  Sensitive = true
   description = "The connection string to mongodb"
-}
-variable "cloud-credentials" {
-  description = "The keyfile credentials for the gcp service account"
 }
 #####################################################################
 # Cloud Run Provider
