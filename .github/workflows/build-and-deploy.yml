@@ -56,7 +56,7 @@ jobs:
 
       # Set the application default login from gcloud for terraform
       - name: Set default Credentials from GCloud
-        run: gcloud auth application-default login
+        run: gcloud auth application-default login -q
 
       # Initialize the terraform build
       - name: Terraform Init
