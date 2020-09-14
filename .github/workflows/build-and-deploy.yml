@@ -53,8 +53,10 @@ jobs:
       # Setup the Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ secrets.CLOUD_CREDENTIALS }}
+
+      # Set the application default login from gcloud for terraform
+      - name: Set default Credentials from GCloud
+        run: gcloud auth application-default login
 
       # Initialize the terraform build
       - name: Terraform Init
@@ -70,8 +72,7 @@ jobs:
             -var="project=${{secrets.GCP_PROJECT}}"                   \
             -var="docker-tag=$GITHUB_SHA"                             \
             -var="auth-secret=${{secrets.AUTH_SECRET}}"               \
-            -var="mongodb-connection=${{secrets.MONGODB_CONNECTION}}" \
-            -var="cloud-credentials=${{secrets.CLOUD_CREDENTIALS}}"
+            -var="mongodb-connection=${{secrets.MONGODB_CONNECTION}}"
 
       # Apply terraform scripts to gcp
       - name: Terraform Apply
@@ -81,5 +82,4 @@ jobs:
             -var="project=${{secrets.GCP_PROJECT}}"                   \
             -var="docker-tag=$GITHUB_SHA"                             \
             -var="auth-secret=${{secrets.AUTH_SECRET}}"               \
-            -var="mongodb-connection=${{secrets.MONGODB_CONNECTION}}" \
-            -var="cloud-credentials=${{secrets.CLOUD_CREDENTIALS}}"
+            -var="mongodb-connection=${{secrets.MONGODB_CONNECTION}}"

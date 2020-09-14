@@ -42,7 +42,6 @@ variable "cloud-credentials" {
 #####################################################################
 provider "google" {
   project = var.project
-  credentials = var.cloud-credentials
 }
 
 # Create public access
