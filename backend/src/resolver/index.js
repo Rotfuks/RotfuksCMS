@@ -11,7 +11,7 @@ import componentService, {ComponentType} from '../service/componentService';
 const nodeResolver = {
   Node: {
     __resolveType(node) {
-      if (node.toObject().linkTarget) {
+      if (node.toObject().newTab) {
         return 'NavLink';
       } else if (node.toObject().mainNav) {
         return 'Navbar';

@@ -5,7 +5,7 @@ const navLinkSchema = new Schema({
   rPagesId: {type: String, index: true},
   label: String,
   url: String,
-  linkTarget: Boolean,
+  newTab: Boolean,
 });
 
 const navbarSchema = new Schema({

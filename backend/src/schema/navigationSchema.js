@@ -28,13 +28,13 @@ export default gql`
         _id: ID!
         label: String!
         url: String!
-        linkTarget: Boolean
+        newTab: Boolean
     }
     input NavLinkInput {
         _id: ID
         label: String
         url: String
-        linkTarget: Boolean
+        newTab: Boolean
     }
   
     extend type Mutation {
