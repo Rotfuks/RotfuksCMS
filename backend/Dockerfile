@@ -10,5 +10,5 @@ COPY . .
 
 RUN npm run test
 
-EXPOSE 4000
+EXPOSE 4001
 CMD [ "npm", "run", "prod" ]
