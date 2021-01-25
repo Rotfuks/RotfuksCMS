@@ -29,3 +29,8 @@ jobs:
         run: |
           cd authenticate 
           docker build -t rotfukscms/authenticate:PRCheck .
+
+      - name: Build pages image
+        run: |
+          cd pages
+          docker build -t rotfukscms/pages:PRCheck .
