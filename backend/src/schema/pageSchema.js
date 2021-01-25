@@ -18,7 +18,7 @@ export default gql`
         sections: [Section]!
     }
     type Section {
-        name: String!
+        name: ID!
         title: String
         columns: Int!
         components: [Component]!
@@ -37,7 +37,7 @@ export default gql`
         sections: [SectionInput]
     }
     input SectionInput {
-        name: String!
+        name: ID!
         title: String
         columns: Int!
         components: [ID]!

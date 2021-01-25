@@ -7,7 +7,8 @@ const pageSchema = new Schema({
   title: String,
   url: String,
   sections: [{
-    name: String,
+    _id: false,
+    name: {type: String, unique: true, required: true},
     title: String,
     columns: Number,
     components: [{type: Schema.Types.ObjectId, ref: 'Component'}],
